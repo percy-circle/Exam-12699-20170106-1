@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet"
+	href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<body>
+<form role="form" method="post" action="update.action">
+  <div class="form-group">
+    <label for="name">title</label>
+    <input id="fid" name="filmId" type="hidden">
+    <input id="title" name="title" type="text" class="form-control">
+    <label for="name">description</label>
+    <input id="description" name="description" type="text" class="form-control" >
+    <label for="name">language </label>
+     <select id=language_id name="language_id" class="form-control">
+
+     </select>
+  </div>
+  <button type="submit" class="btn btn-primary">提交</button>
+ </form>
+ <script type="text/javascript">
+ $('document').ready(function() { 
+	 $.ajax({
+         url: "getlanguageList.action",
+         type: "GET",
+         success: function (data) {     	  
+       	  for (var item of data) {
+		 $("#language_id").append("<option value='"+item.languageId+"'>"+item.name+"</option>");
+               }
+         }
+     })
+	 var searchStr = location.search;
+	 searchStr = searchStr.substr(4);
+	  $.ajax({
+          url: "findFilmById.action?id="+searchStr,
+          type: "GET",
+          success: function (data) {
+                   $("#fid").val(data.filmId);
+                   $("#title").val(data.title);
+                   $("#description").val(data.description);
+                   var t=data.language.languageId;
+                   console.log(t);
+                   $("#language_id").val(t);
+          }
+      });
+	 
+ });
+ </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>Exam-12699-20170106-1</display-name>
+  <!-- 加载spring容器 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/spring/applicationContext-*.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	  <!-- springmvc前端控制器 -->
+	  <servlet>
+	    	<servlet-name>springmvc</servlet-name>
+	  		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	  	 <init-param>
+	  <!-- contextConfigLocation 配置springmvc加载的配置文件（配置处理映射器、适配器等等）
+	  如果不手动配置contextConfigLocation则默认加载的是/WEB-INF/servletmvc-servlet.xml -->
+	 		<param-name>contextConfigLocation</param-name>
+	  		<param-value>classpath:spring/springMVC.xml</param-value>
+	  	</init-param>
+	  </servlet>
+	  <servlet-mapping>
+	  <servlet-name>springmvc</servlet-name>
+	  <!-- 第一种：*.action,访问以.action结尾由DispatcherServlet进行解析
+	                  第二种：/所有访问的地址都由DispatcherServlet，对于静态的文件解析需要配置不让DispatcherServlet解析
+	                  使用此种凡是可以时间RESTful的风格的url
+	                  第三种：/*，这样的配置不对，使用这种配置，最终要转发一个jsp页面时，仍然会经过DispatcherServlet，结果找不到handler -->
+	  <url-pattern>*.action</url-pattern>
+	  </servlet-mapping>
+
+	<!-- 解决乱码 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+  </welcome-file-list>
+</web-app>

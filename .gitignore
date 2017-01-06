@@ -1,0 +1,25 @@
+###
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+**/out
+/overlays/
+/core/overlays/
+set  foreign_key_checks=0
+# Mac
+.DS_Store
+
+# Maven
+**/log/
+**/target
+**/*.log
+**/tmp
+**/.tmp
+**/bin/**
+###

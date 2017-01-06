@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.FilmMapper" >
+ <resultMap type="FilmCustom" id="FilmLanguageResult">
+       <!-- 映射Film信息 -->
+       <id column="film_id" property="filmId"/>
+       <result column="title" property="title"/>
+       <result column="description" property="description"/>
+       <!-- 配置Languagex信息 -->
+       <association property="language" javaType="Language">
+       <id column="language_id" property="languageId"/>
+          <result column="name" property="name"/>
+       </association>
+    </resultMap>
+	<select id="findFilmList" resultMap="FilmLanguageResult" >
+		select film.film_id,film.title,film.description,l.name from language as l,film where l.language_id=film.language_id
+	</select>
+	<select id="getFilmCount" resultType="Long">
+	  select count(*) from film
+	</select>
+	<select id="getFilmByPage" parameterType="page" resultMap="FilmLanguageResult">
+	     select film.film_id,film.title,film.description,l.name,film.language_id from language as l,film where l.language_id=film.language_id limit #{currenPage},#{maxResult}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="short">
+	   delete from film where film_id=#{value}
+	</delete>
+	<select id="findFilmById" parameterType="short" resultMap="FilmLanguageResult">
+	select film.film_id,film.title,film.description,l.name,film.language_id  from language as l,film where l.language_id=film.language_id and film.film_id=#{id}
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="Film" >
+    update film  set title=#{title},description=#{description},language_id=#{language_id} where film_id = #{filmId}
+  </update>
+  <insert id="insert" parameterType="Film" >
+    insert into film (title,description,language_id)
+    values (#{title},#{description},#{language_id})
+  </insert>
+</mapper>

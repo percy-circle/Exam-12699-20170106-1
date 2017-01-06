@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<body>
+	<div class="container" style="margin-top: 100px">
+		<form action="login.jspx" method="post" class="well"
+			style="width: 220px; margin: 0px auto;">
+			 <h3 align="center">系统登录</h3>
+	         <label>用户名:</label> 
+	         <input id="fname" type="text" name="first_name" style="height: 30px" class="span3" />
+		     <button onclick="log()" type="button" class="btn btn-primary" style="margin-top: 10px;margin-left: 40px">登陆系统</button>
+		</form>
+		
+	</div>
+	<script type="text/javascript">
+   function log() {
+	var first_name=$("#fname").val();
+	  $.ajax({
+          url: "findCustomer.action",
+          type: "GET",
+          data: {first_name},
+          success: function (mes) {
+               if(mes=="success"){
+            	   window.location.href="filmlist.html";
+               }else{
+            	   alert("用户名错误");
+               }    
+          }
+      })
+}
+
+</script>
+</body>
+</html>
